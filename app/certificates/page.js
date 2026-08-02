@@ -42,8 +42,11 @@ export default function CertificatesPage() {
               <p className="text-xs text-[var(--text-muted)]">Issued: <strong className="text-[var(--text-primary)]">{modalContent.issue_date}</strong></p>
             )}
             <div className="flex flex-wrap justify-center gap-1.5">
-              {modalContent.skills_gained?.map((s, i) => (
-                <span key={i} className="tag">{s}</span>
+              {(Array.isArray(modalContent.skills_gained)
+                ? modalContent.skills_gained
+                : (modalContent.skills_gained?.en || [])
+              ).map((s, i) => (
+                <span key={i} className="tag">{typeof s === 'object' ? (s.en || '') : s}</span>
               ))}
             </div>
             {modalContent.credential_id && (

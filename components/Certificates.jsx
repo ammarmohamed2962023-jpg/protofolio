@@ -63,7 +63,10 @@ function CertCard({ cert, index, onOpen, lang, t }) {
 
         {/* Skills gained */}
         <div className="flex flex-wrap gap-1.5 pt-1">
-          {cert.skills_gained?.slice(0, 3).map((s, i) => (
+          {(Array.isArray(cert.skills_gained) 
+            ? cert.skills_gained 
+            : (cert.skills_gained?.[lang] || cert.skills_gained?.en || [])
+          ).slice(0, 3).map((s, i) => (
             <span key={i} className="tag text-[9px]">{getBilingualText(s, lang)}</span>
           ))}
         </div>

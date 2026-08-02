@@ -171,8 +171,11 @@ function CertModal({ cert }) {
       )}
 
       <div className="flex flex-wrap justify-center gap-1.5">
-        {cert.skills_gained?.map((s, i) => (
-          <span key={i} className="tag">{s}</span>
+        {(Array.isArray(cert.skills_gained)
+          ? cert.skills_gained
+          : (cert.skills_gained?.en || [])
+        ).map((s, i) => (
+          <span key={i} className="tag">{typeof s === 'object' ? (s.en || '') : s}</span>
         ))}
       </div>
 
