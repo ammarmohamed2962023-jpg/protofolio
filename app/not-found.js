@@ -1,3 +1,4 @@
+'use client';
 import Link from 'next/link';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
@@ -12,7 +13,7 @@ export default function NotFound() {
         </div>
         <h2 className="text-2xl font-bold mb-2">Page Not Found</h2>
         <p className="text-sm text-[var(--text-secondary)] mb-8 max-w-md">
-          The page you are looking for doesn't exist, has been moved, or is temporarily unavailable.
+          The page you are looking for doesn&apos;t exist, has been moved, or is temporarily unavailable.
         </p>
         <Link href="/" className="btn-primary px-8 py-3 rounded-full text-sm font-bold flex items-center gap-2">
           Return Home
