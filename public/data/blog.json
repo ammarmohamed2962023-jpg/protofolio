@@ -1,0 +1,83 @@
+[
+  {
+    "id": "subnetting-guide",
+    "title": {
+      "en": "Demystifying VLSM: A Practical Guide to IP Subnetting",
+      "ar": "تبسيط الـ VLSM: دليل عملي لتقسيم شبكات الـ IP"
+    },
+    "category": {
+      "en": "Networking",
+      "ar": "الشبكات"
+    },
+    "excerpt": {
+      "en": "Learn how Variable Length Subnet Masking (VLSM) works, and how to allocate IP addresses efficiently for organizations.",
+      "ar": "تعلم كيفية عمل قناع الشبكة ذو الطول المتغير (VLSM)، وكيفية توزيع عناوين الـ IP بكفاءة عالية للمؤسسات."
+    },
+    "content": {
+      "en": "IP Subnetting is one of the foundational blocks of computer networking. In this article, we dive deep into Variable Length Subnet Masking (VLSM). \n\nWe explain how to structure subnets step-by-step, starting from the largest host requirements down to the point-to-point links. Using practical subnetting charts and bit-manipulation diagrams, you'll master how to prevent address wastage.",
+      "ar": "تقسيم شبكات الـ IP هو أحد الأحجار الأساسية في علم الشبكات. في هذا المقال، نغوص عميقاً في شرح قناع الشبكة ذو الطول المتغير (VLSM).\n\nنشرح خطوة بخطوة كيفية تخطيط الشبكات الفرعية، بدءاً من الأقسام ذات الاحتياج الأكبر للعناوين وصولاً إلى روابط الربط الثنائي (Point-to-Point). عبر استخدام الجداول الرياضية التوضيحية، ستتمكن من منع هدر العناوين نهائياً."
+    },
+    "cover_image": "/assets/images/blog-placeholder.png",
+    "date": "2024-11-15",
+    "read_time": {
+      "en": "5 min read",
+      "ar": "قراءة في 5 دقائق"
+    },
+    "featured": true,
+    "tags": ["networking", "cisco", "subnetting"]
+  },
+  {
+    "id": "csharp-concurrency",
+    "title": {
+      "en": "Handling Database Concurrency in C# WinForms",
+      "ar": "التعامل مع التزامن وقفل البيانات في تطبيقات C# WinForms"
+    },
+    "category": {
+      "en": "Software Development",
+      "ar": "تطوير البرمجيات"
+    },
+    "excerpt": {
+      "en": "An in-depth look at implementing pessimistic locking in SQL Server and protecting transactions in C# applications.",
+      "ar": "نظرة متعمقة على تطبيق القفل المتشائم في SQL Server وحماية المعاملات المالية في تطبيقات C#."
+    },
+    "content": {
+      "en": "When building multi-terminal desktop systems (like a pharmacy POS), concurrency control is critical to avoid data overwrites. \n\nThis article details the differences between optimistic and pessimistic locking, and shows how to write clean C# code using transaction isolation levels to prevent race conditions during checkout operations.",
+      "ar": "عند بناء تطبيقات سطح مكتب تعمل من عدة أجهزة في نفس الوقت (مثل كاشير الصيدليات)، تصبح حماية تزامن البيانات أمراً حيوياً لتجنب الكتابة فوق بيانات المبيعات.\n\nيشرح هذا المقال بالتفصيل الفروق بين القفل المتفائل والمتشائم، ويعرض أمثلة عملية لكود C# باستخدام مستويات عزل المعاملات (Transaction Isolation) في SQL Server لمنع حدوث تصادم للبيانات."
+    },
+    "cover_image": "/assets/images/blog-placeholder.png",
+    "date": "2024-12-05",
+    "read_time": {
+      "en": "7 min read",
+      "ar": "قراءة في 7 دقائق"
+    },
+    "featured": false,
+    "tags": ["csharp", "sql-server", "concurrency"]
+  },
+  {
+    "id": "ospf-deep-dive",
+    "title": {
+      "en": "How OSPF Builds the Shortest Path Tree",
+      "ar": "كيف يبني بروتوكول OSPF شجرة المسار الأقصر للشبكات"
+    },
+    "category": {
+      "en": "Networking",
+      "ar": "الشبكات"
+    },
+    "excerpt": {
+      "en": "Understanding Link State Advertisements (LSAs) and Dijkstra's algorithm behind the OSPF dynamic routing protocol.",
+      "ar": "فهم إعلانات حالة الربط (LSAs) وخوارزمية ديكسترا التي تقف وراء بروتوكول التوجيه الديناميكي OSPF."
+    },
+    "content": {
+      "en": "Open Shortest Path First (OSPF) is a popular link-state routing protocol. \n\nIn this tutorial, we analyze how OSPF routers exchange link-state advertisements (LSAs) to construct a complete map of the network topology, and how they apply Dijkstra's SPF algorithm to compute the fastest route for data packets.",
+      "ar": "يعتبر بروتوكول OSPF من أشهر بروتوكولات التوجيه الديناميكي المبنية على حالة الرابط (Link-State).\n\nفي هذا الدرس، نقوم بتحليل كيفية تبادل أجهزة التوجيه لإعلانات حالة الرابط (LSAs) لبناء خريطة كاملة لطوبولوجيا الشبكة، وكيف تطبق خوارزمية ديكسترا (Dijkstra) لحساب أسرع مسار ممكن لحزم البيانات."
+    },
+    "cover_image": "/assets/images/blog-placeholder.png",
+    "date": "2025-01-20",
+    "read_time": {
+      "en": "6 min read",
+      "ar": "قراءة في 6 دقائق"
+    },
+    "featured": false,
+    "tags": ["networking", "ospf", "routing"]
+  }
+]

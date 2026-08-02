@@ -1,0 +1,210 @@
+[
+  {
+    "id": "alasar",
+    "title": {
+      "en": "ALASAR Pharmacy Management System",
+      "ar": "نظام صيدلية الأثر لإدارة المبيعات"
+    },
+    "category": "desktop",
+    "image": "/assets/images/project_alasar.png",
+    "featured": true,
+    "status": {
+      "en": "Completed",
+      "ar": "مكتمل"
+    },
+    "technologies": ["C#", ".NET WinForms", "SQL Server", "RDLC Reports"],
+    "description": {
+      "en": "Enterprise pharmacy management system with POS billing, inventory control, and RDLC reports.",
+      "ar": "نظام مؤسسي متكامل لإدارة الصيدليات يتضمن الفوترة السريعة، مراقبة المخزون، وتقارير الأداء المالي."
+    },
+    "year": "2024",
+    "github": "https://github.com/ammar-mohamed",
+    "demo": "#",
+    "problem": {
+      "en": "Pharmacies struggled with manual inventory tracking, slow checkout processes, and inaccurate sales reporting.",
+      "ar": "كانت الصيدليات تعاني من التتبع اليدوي للمخزون، وبطء عمليات الدفع، وعدم دقة تقارير الأرباح والمبيعات."
+    },
+    "solution": {
+      "en": "Designed a custom desktop solution integrating barcode scanners, fast POS billing, automated stock alerts, and RDLC visual reports.",
+      "ar": "تم تصميم وتطوير تطبيق مكتبي متكامل يدمج ماسح الباركود، نظام مبيعات POS سريع، تنبيهات تلقائية للمخزون، وتقارير مرئية."
+    },
+    "architecture": {
+      "en": "Built on .NET Framework with WinForms architecture, communicating directly with Microsoft SQL Server using optimized stored procedures.",
+      "ar": "تم البناء باستخدام لغة C# ومعمارية Windows Forms مع الاتصال المباشر بقاعدة بيانات SQL Server عبر الإجراءات المخزنة (Stored Procedures) المحسنة."
+    },
+    "features": {
+      "en": [
+        "Real-time inventory levels tracking with automatic low stock alerts.",
+        "Rapid POS billing system with direct barcode scanner integration.",
+        "Dynamic financial reports generated weekly/monthly via RDLC.",
+        "Role-based user access controls for admins and cashiers."
+      ],
+      "ar": [
+        "متابعة مستويات المخازن بالوقت الفعلي مع تنبيهات تلقائية عند انخفاض الكمية.",
+        "نظام بيع سريع ونقطة بيع مدمج مع قارئ الباركود مباشرة.",
+        "تقارير مالية ديناميكية مفصلة أسبوعية وشهرية وسنوية عبر تقنية RDLC.",
+        "إدارة صلاحيات المستخدمين والوصول المبني على الأدوار للمسؤولين والكاشير."
+      ]
+    },
+    "challenges": {
+      "en": "Handling concurrency during multi-terminal transactions. Solved by implementing SQL Server pessimistic locking and transaction isolation levels.",
+      "ar": "كان التحدي الأكبر هو التعامل مع التزامن (Concurrency) عند العمل من عدة أجهزة في نفس الوقت. تم حل ذلك باستخدام القفل المتشائم (Pessimistic Locking) ومستويات عزل المعاملات في SQL Server."
+    }
+  },
+  {
+    "id": "student-system",
+    "title": {
+      "en": "Student Management System",
+      "ar": "نظام إدارة الطلاب الأكاديمي"
+    },
+    "category": "desktop",
+    "image": "/assets/images/project_student.png",
+    "featured": false,
+    "status": {
+      "en": "Completed",
+      "ar": "مكتمل"
+    },
+    "technologies": ["Java", "Swing / JavaFX", "MySQL", "OOP"],
+    "description": {
+      "en": "Desktop academic system for student enrollment, grade tracking, and automatic GPA calculation.",
+      "ar": "تطبيق مكتبي لإدارة الشؤون الأكاديمية للطلاب، متابعة الدرجات، وحساب المعدل التراكمي (GPA) تلقائياً."
+    },
+    "year": "2024",
+    "github": "https://github.com/ammar-mohamed",
+    "demo": "#",
+    "problem": {
+      "en": "Academic advisors spent excessive time manually calculating student GPAs and tracking course prerequisites.",
+      "ar": "كان المرشدون الأكاديميون يستغرقون وقتاً طويلاً في حساب معدلات الطلاب تراكمياً وتتبع متطلبات المواد يدوياً."
+    },
+    "solution": {
+      "en": "Developed a Java application with automated grade conversions, real-time GPA calculations, and pre-requisite enforcement rules.",
+      "ar": "تم تطوير برنامج بلغة جافا يقوم بتحويل الدرجات آلياً، وحساب المعدلات في الوقت الفعلي، وتطبيق شروط تسجيل المواد التلقائية."
+    },
+    "architecture": {
+      "en": "Implemented using Model-View-Controller (MVC) pattern in Java Swing, with MySQL database server layer.",
+      "ar": "تم التطبيق باستخدام نمط التصميم (MVC) مع واجهة Java Swing والاتصال بقاعدة بيانات MySQL لإدارة السجلات بشكل منظم."
+    },
+    "features": {
+      "en": [
+        "Automated GPA and CGPA calculations based on grading systems.",
+        "Interactive course registration with prerequisite validation.",
+        "Generate student transcripts and print-ready report cards.",
+        "Secure relational database schema with referential integrity."
+      ],
+      "ar": [
+        "حسابات آلية للمعدلات الفصلية والتراكمية بناءً على نظام الساعات المعتمدة.",
+        "تسجيل مواد تفاعلي يتحقق تلقائياً من المتطلبات السابقة للمادة.",
+        "توليد كشوف درجات الطلاب وبطاقات التقارير الجاهزة للطباعة.",
+        "بناء هيكل قاعدة بيانات علائقية آمن يضمن سلامة وتكامل البيانات."
+      ]
+    },
+    "challenges": {
+      "en": "Designing a reliable database connection helper that prevents leaks. Solved by implementing JDBC connection pooling and try-with-resources blocks.",
+      "ar": "تصميم فئة اتصال بقاعدة البيانات تمنع تسرب الاتصالات. تم حل ذلك باستخدام JDBC Connection Pooling وتطبيق كتل try-with-resources لضمان إغلاق الاتصالات تلقائياً."
+    }
+  },
+  {
+    "id": "cisco-lab",
+    "title": {
+      "en": "Cisco Enterprise Network Lab",
+      "ar": "مختبر شبكات سيسكو للمؤسسات"
+    },
+    "category": "networking",
+    "image": "/assets/images/project_cisco.png",
+    "featured": true,
+    "status": {
+      "en": "Completed",
+      "ar": "مكتمل"
+    },
+    "technologies": ["Cisco IOS", "OSPF", "VLAN Routing", "ACL Firewall", "Subnetting"],
+    "description": {
+      "en": "Enterprise topology design simulating routing, switching, security rules, and IPv4/IPv6 address plans.",
+      "ar": "تصميم طوبولوجيا شبكة مؤسسية تحاكي التوجيه والتبديل وتطبيق سياسات الأمان وتخطيط العناوين IPv4 و IPv6."
+    },
+    "year": "2024",
+    "github": "https://github.com/ammar-mohamed",
+    "demo": "#",
+    "problem": {
+      "en": "Designing a secure, segmented, and scalable network architecture for a multi-department organization with a limited IP pool.",
+      "ar": "تصميم بنية تحتية لشبكة آمنة، مقسمة وقابلة للتوسع لمؤسسة ذات أقسام متعددة مع توفير نطاقات العناوين المتاحة."
+    },
+    "solution": {
+      "en": "Structured a multi-area OSPF network with VLANs, DHCP helper addresses, and ACL firewall rules to restrict cross-department access.",
+      "ar": "تم بناء شبكة OSPF متعددة المناطق مع تقسيم VLANs، وتكوين عناوين DHCP المساعدة، وتطبيق قواعد جدران الحماية ACL لمنع الوصول غير المصرح به بين الأقسام."
+    },
+    "architecture": {
+      "en": "Designed using Cisco Packet Tracer, deploying Core-Distribution-Access 3-tier model with redundant links.",
+      "ar": "تم التصميم عبر برنامج Cisco Packet Tracer بتطبيق نموذج سيسكو ثلاثي الطبقات (Core-Distribution-Access) مع خطوط احتياطية لمنع الانقطاع."
+    },
+    "features": {
+      "en": [
+        "VLSM IP subnetting maximizing IP efficiency for 500+ host organization.",
+        "Dynamic routing using OSPF with MD5 routing protocol authentication.",
+        "VLAN and Inter-VLAN routing (Router-on-a-Stick and Layer 3 Switch).",
+        "Standard and Extended Access Control Lists (ACLs) for security filtering."
+      ],
+      "ar": [
+        "تقسيم عناوين VLSM لرفع كفاءة استهلاك الـ IPs لمؤسسة تضم أكثر من 500 جهاز.",
+        "توجيه ديناميكي باستخدام OSPF مع تشفير رسائل التوجيه عبر مصادقة MD5.",
+        "إعداد VLANs والتوجيه بين الشبكات الافتراضية عبر المحولات من الطبقة الثالثة.",
+        "استخدام قوائم التحكم بالوصول القياسية والممتدة (ACLs) لتصفية حزم البيانات وتأمين الشبكة."
+      ]
+    },
+    "challenges": {
+      "en": "Configuring route redistribution and loop prevention. Solved by implementing passive interfaces and strict route filtering.",
+      "ar": "ضبط توزيع طرق التوجيه وتفادي حلقات التوجيه (Loops). تم حل ذلك بتفعيل الواجهات الخاملة (Passive Interfaces) والتصفية الصارمة للطرق."
+    }
+  },
+  {
+    "id": "portfolio-site",
+    "title": {
+      "en": "Personal Portfolio Website v3.0",
+      "ar": "موقعي الشخصي ومعرض أعمالي v3.0"
+    },
+    "category": "web",
+    "image": "/assets/images/avatar.png",
+    "featured": false,
+    "status": {
+      "en": "In Progress",
+      "ar": "قيد العمل"
+    },
+    "technologies": ["Next.js", "React 19", "Tailwind CSS", "Framer Motion"],
+    "description": {
+      "en": "Modern portfolio built with Next.js App Router, advanced glassmorphism styles, and interactive AI assistant.",
+      "ar": "موقع معرض أعمال حديث تم بناؤه باستخدام Next.js App Router، بتأثيرات الزجاج الجمالية ومساعد ذكي تفاعلي."
+    },
+    "year": "2025",
+    "github": "https://github.com/ammar-mohamed",
+    "demo": "https://ammar-portfolio.vercel.app",
+    "problem": {
+      "en": "Standard static resumes don't showcase interactive terminal capabilities, responsive designs, or technical writing blogs effectively.",
+      "ar": "لا تعرض السير الذاتية الورقية الثابتة القدرات البرمجية التفاعلية أو التصاميم المتجاوبة أو مهارات الكتابة التقنية بشكل فعال."
+    },
+    "solution": {
+      "en": "Created a high-fidelity Next.js application containing a web terminal simulator, dynamic CMS local mock, and automated particles.",
+      "ar": "تم إنشاء موقع فائق الجودة باستخدام Next.js يحتوي على محاكاة لطرفية أوامر الويب، وإدارة محتوى محلية، ومؤثرات جزيئات متحركة."
+    },
+    "architecture": {
+      "en": "Single Page Application using Next.js client components for animation sync, backed by local storage and JSON APIs.",
+      "ar": "تطبيق صفحة واحدة (SPA) يعتمد على مكونات عميل Next.js لمزامنة الحركات والتفاعل، مدعوماً بالتخزين المحلي وملفات البيانات."
+    },
+    "features": {
+      "en": [
+        "Full English and Arabic bilingual support with RTL/LTR layout styles.",
+        "Interactive Terminal command-line simulator showing candidate details.",
+        "Local CMS Admin modal allowing dynamic mock project insertions.",
+        "Interactive chat assistant offering answers about skills and career."
+      ],
+      "ar": [
+        "دعم كامل للغتين العربية والإنجليزية مع تعديل تلقائي لاتجاه الصفحات RTL/LTR.",
+        "طرفية تفاعلية تحاكي سطر الأوامر لعرض بيانات السيرة الذاتية عبر كتابة الأوامر.",
+        "لوحة تحكم إدارية (Admin CMS) تسمح بإضافة مشاريع بشكل مؤقت في المتصفح.",
+        "مساعد محادثة ذكي تفاعلي يجيب عن الأسئلة المتعلقة بمهارات عمار ومساره المهني."
+      ]
+    },
+    "challenges": {
+      "en": "Preventing layout shift and hydration mismatch. Solved by implementing dynamic imports and client-only scripts for rendering theme.",
+      "ar": "منع حدوث وميض في التصميم أو اختلاف في ترطيب الصفحة (Hydration Mismatch). تم الحل باستخدام الاستيراد الديناميكي وسكربتات العميل المباشرة قبل تحميل الصفحة."
+    }
+  }
+]

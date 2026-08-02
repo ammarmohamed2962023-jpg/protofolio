@@ -1,0 +1,66 @@
+[
+  {
+    "id": "cisco-network-basics",
+    "title": {
+      "en": "Networking Basics",
+      "ar": "أساسيات الشبكات (Networking Basics)"
+    },
+    "provider": "Cisco Networking Academy",
+    "image": "/assets/images/cert_networking.png",
+    "skills_gained": {
+      "en": ["IP Subnetting", "Routing & Switching", "OSI Model", "Network Topologies"],
+      "ar": ["تقسيم الشبكات IP", "التوجيه والتبديل", "نموذج OSI", "طوبولوجيا الشبكات"]
+    },
+    "issue_date": "2024",
+    "credential_id": "CISCO-NET-BASICS-101",
+    "verify_url": "https://www.credly.com"
+  },
+  {
+    "id": "cisco-addressing",
+    "title": {
+      "en": "Network Addressing and Basic Troubleshooting",
+      "ar": "عنونة الشبكات واستكشاف الأخطاء الأساسية"
+    },
+    "provider": "Cisco Networking Academy",
+    "image": "/assets/images/cert_addressing.png",
+    "skills_gained": {
+      "en": ["IPv4 & IPv6 Addressing", "Subnetting VLSM", "DHCP Configuration", "Troubleshooting Ping/Traceroute"],
+      "ar": ["عنونة IPv4 و IPv6", "التقسيم الفرعي VLSM", "إعداد بروتوكول DHCP", "استكشاف أخطاء الشبكات"]
+    },
+    "issue_date": "2024",
+    "credential_id": "CISCO-ADDR-202",
+    "verify_url": "https://www.credly.com"
+  },
+  {
+    "id": "cisco-english-it",
+    "title": {
+      "en": "English for IT",
+      "ar": "اللغة الإنجليزية لقطاع تكنولوجيا المعلومات"
+    },
+    "provider": "Cisco Networking Academy / OpenEDG",
+    "image": "/assets/images/cert_english.png",
+    "skills_gained": {
+      "en": ["Technical Terminology", "Professional Communication", "IT Operations English"],
+      "ar": ["المصطلحات التقنية", "التواصل المهني", "لغة عمليات تكنولوجيا المعلومات"]
+    },
+    "issue_date": "2024",
+    "credential_id": "CISCO-ENG-IT-303",
+    "verify_url": "https://www.credly.com"
+  },
+  {
+    "id": "cisco-academy-cert",
+    "title": {
+      "en": "Cisco Networking Academy Course Certificate",
+      "ar": "شهادة إتمام مسار أكاديمية سيسكو للشبكات"
+    },
+    "provider": "Cisco Networking Academy",
+    "image": "/assets/images/cert_cisco.png",
+    "skills_gained": {
+      "en": ["Cisco IOS Configuration", "OSPF Routing Protocol", "VLAN & Inter-VLAN", "ACL Firewall Filtering"],
+      "ar": ["إعداد نظام تشغيل سيسكو IOS", "بروتوكول توجيه OSPF", "تقسيم وتوجيه VLANs", "قوائم التحكم في الوصول ACL"]
+    },
+    "issue_date": "2024",
+    "credential_id": "CISCO-ACAD-404",
+    "verify_url": "https://www.credly.com"
+  }
+]
