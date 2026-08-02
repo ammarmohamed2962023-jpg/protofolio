@@ -1,7 +1,1 @@
-import * as Sentry from "@sentry/nextjs";
-
-Sentry.init({
-  dsn: process.env.NEXT_PUBLIC_SENTRY_DSN || "https://public@sentry.example.com/1",
-  tracesSampleRate: 1,
-  debug: false,
-});
+// Sentry edge-side monitoring — disabled until SENTRY_DSN is configured

@@ -1,15 +1,2 @@
-import * as Sentry from "@sentry/nextjs";
-
-Sentry.init({
-  dsn: process.env.NEXT_PUBLIC_SENTRY_DSN || "https://public@sentry.example.com/1",
-  tracesSampleRate: 1,
-  debug: false,
-  replaysOnErrorSampleRate: 1.0,
-  replaysSessionSampleRate: 0.1,
-  integrations: [
-    Sentry.replayIntegration({
-      maskAllText: true,
-      blockAllMedia: true,
-    }),
-  ],
-});
+// Sentry client-side monitoring — disabled until NEXT_PUBLIC_SENTRY_DSN is configured
+// To enable: add NEXT_PUBLIC_SENTRY_DSN to your Vercel environment variables
