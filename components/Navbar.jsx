@@ -23,7 +23,7 @@ const getTranslationKey = (label) => {
   return mapping[label] || label;
 };
 
-export default function Navbar({ onOpenTerminal }) {
+export default function Navbar({ onOpenTerminal = () => {} }) {
   const [theme, setTheme]           = useState('dark');
   const { lang, changeLanguage }    = useLanguage();
   const [mobileOpen, setMobileOpen] = useState(false);

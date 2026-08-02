@@ -17,7 +17,7 @@ const LinkedinIcon = ({ className = 'w-4 h-4' }) => (
 
 const TECH_STACK = ['Next.js', 'React 19', 'Tailwind CSS v4', 'JavaScript ES6+'];
 
-export default function Footer({ onOpenAdmin }) {
+export default function Footer({ onOpenAdmin = () => {} }) {
   const year = new Date().getFullYear();
 
   return (
