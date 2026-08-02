@@ -5,8 +5,10 @@ const LanguageContext = createContext(null);
 
 export function LanguageProvider({ children }) {
   const [lang, setLang] = useState('en');
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
     const storedLang = localStorage.getItem('ammar_lang') || 'en';
     setLang(storedLang);
     document.documentElement.setAttribute('lang', storedLang);
@@ -21,7 +23,7 @@ export function LanguageProvider({ children }) {
   };
 
   return (
-    <LanguageContext.Provider value={{ lang, changeLanguage }}>
+    <LanguageContext.Provider value={{ lang: mounted ? lang : 'en', changeLanguage }}>
       {children}
     </LanguageContext.Provider>
   );
@@ -34,3 +36,4 @@ export function useLanguage() {
   }
   return context;
 }
+

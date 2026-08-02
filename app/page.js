@@ -65,9 +65,11 @@ function ProjectModal({ project }) {
   if (!project) return null;
   return (
     <div className="space-y-6">
-      <div className="h-64 rounded-2xl overflow-hidden border border-[var(--border-glass)]">
-        <img src={project.image} alt={project.title} className="w-full h-full object-cover" />
-      </div>
+      {project.image && (
+        <div className="h-64 rounded-2xl overflow-hidden border border-[var(--border-glass)]">
+          <img src={project.image} alt={project.title?.en || project.title || 'Project'} className="w-full h-full object-cover" />
+        </div>
+      )}
 
       <div className="space-y-2">
         <div className="flex flex-wrap items-center gap-2">
@@ -75,25 +77,27 @@ function ProjectModal({ project }) {
             <span className="tag tag-orange text-[10px]">⭐ Featured</span>
           )}
           {project.status && (
-            <span className="tag tag-green text-[10px]">{project.status}</span>
+            <span className="tag tag-green text-[10px]">{typeof project.status === 'object' ? project.status.en : project.status}</span>
           )}
           {project.year && (
             <span className="text-xs font-mono text-[var(--text-muted)]">{project.year}</span>
           )}
         </div>
-        <h2 className="text-xl font-bold text-[var(--text-primary)]">{project.title}</h2>
-        <div className="flex flex-wrap gap-1.5 mt-2">
-          {project.technologies.map((t, i) => (
-            <span key={i} className="tag">{t}</span>
-          ))}
-        </div>
+        <h2 className="text-xl font-bold text-[var(--text-primary)]">{typeof project.title === 'object' ? project.title.en : project.title}</h2>
+        {project.technologies?.length > 0 && (
+          <div className="flex flex-wrap gap-1.5 mt-2">
+            {project.technologies.map((t, i) => (
+              <span key={i} className="tag">{t}</span>
+            ))}
+          </div>
+        )}
       </div>
 
       <div className="space-y-5 text-sm text-[var(--text-secondary)] leading-relaxed">
         {[
-          { label: 'Problem Statement', value: project.problem },
-          { label: 'Solution Approach', value: project.solution },
-          { label: 'Architecture',      value: project.architecture },
+          { label: 'Problem Statement', value: typeof project.problem === 'object' ? project.problem.en : project.problem },
+          { label: 'Solution Approach', value: typeof project.solution === 'object' ? project.solution.en : project.solution },
+          { label: 'Architecture',      value: typeof project.architecture === 'object' ? project.architecture.en : project.architecture },
         ].filter(s => s.value).map(s => (
           <div key={s.label}>
             <h4 className="text-sm font-bold text-[var(--accent-cyan)] mb-1">{s.label}</h4>
@@ -101,11 +105,11 @@ function ProjectModal({ project }) {
           </div>
         ))}
 
-        {project.features?.length > 0 && (
+        {project.features && (Array.isArray(project.features) ? project.features : project.features.en)?.length > 0 && (
           <div>
             <h4 className="text-sm font-bold text-[var(--accent-cyan)] mb-2">Key Features</h4>
             <ul className="space-y-1.5">
-              {project.features.map((f, i) => (
+              {(Array.isArray(project.features) ? project.features : project.features.en).map((f, i) => (
                 <li key={i} className="flex items-start gap-2">
                   <CheckCircle2 className="w-4 h-4 text-[var(--accent-green)] mt-0.5 shrink-0" aria-hidden="true" />
                   {f}
@@ -118,7 +122,7 @@ function ProjectModal({ project }) {
         {project.challenges && (
           <div>
             <h4 className="text-sm font-bold text-[var(--accent-cyan)] mb-1">Challenges &amp; Lessons</h4>
-            <p>{project.challenges}</p>
+            <p>{typeof project.challenges === 'object' ? project.challenges.en : project.challenges}</p>
           </div>
         )}
       </div>
