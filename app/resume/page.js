@@ -66,7 +66,7 @@ export default function ResumePage() {
                 <h3 className="font-bold text-[var(--accent-cyan)] text-base mb-2">Education</h3>
                 <p className="font-bold text-white">Innovation University</p>
                 <p className="text-xs text-[var(--text-secondary)]">Faculty of Computers &amp; Information</p>
-                <p className="text-xs text-[var(--text-muted)]">Bachelor's Degree (Expected 2027)</p>
+                <p className="text-xs text-[var(--text-muted)]">Bachelor&apos;s Degree (Expected 2027)</p>
               </div>
 
               <div>

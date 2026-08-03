@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 'use client';
 import { useState, useEffect } from 'react';
 import { Download, Eye, Mail, ChevronDown, Phone } from 'lucide-react';
@@ -62,29 +63,29 @@ const itemVariants = {
   visible: { opacity: 1, y: 0, transition: { type: 'spring', stiffness: 300, damping: 24 } }
 };
 
+const WORDS_MAP = {
+  en: [
+    'Computer Science Student',
+    'Networking Specialist (Cisco)',
+    'Software Developer (C# / Java)',
+    'AI & ML Enthusiast',
+  ],
+  ar: [
+    'طالب علوم حاسب',
+    'متخصص في شبكات سيسكو',
+    'مطور برمجيات (C# / Java)',
+    'شغوف بالذكاء الاصطناعي',
+  ]
+};
+
 export default function Hero({ onOpenResume }) {
   const { lang } = useLanguage();
   const t = TRANSLATIONS[lang];
   const [typedText, setTypedText] = useState('');
 
-  const wordsMap = {
-    en: [
-      'Computer Science Student',
-      'Networking Specialist (Cisco)',
-      'Software Developer (C# / Java)',
-      'AI & ML Enthusiast',
-    ],
-    ar: [
-      'طالب علوم حاسب',
-      'متخصص في شبكات سيسكو',
-      'مطور برمجيات (C# / Java)',
-      'شغوف بالذكاء الاصطناعي',
-    ]
-  };
-
   /* ── Typing animation ── */
   useEffect(() => {
-    const words = wordsMap[lang] || wordsMap.en;
+    const words = WORDS_MAP[lang] || WORDS_MAP.en;
     let wordIdx = 0, charIdx = 0, isDeleting = false, timer;
     const type = () => {
       const current = words[wordIdx];

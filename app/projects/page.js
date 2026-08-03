@@ -1,5 +1,7 @@
+/* eslint-disable @next/next/no-img-element */
 'use client';
 import { useState } from 'react';
+import Link from 'next/link';
 import Navbar from '@/components/Navbar';
 import Projects from '@/components/Projects';
 import Footer from '@/components/Footer';
@@ -13,9 +15,9 @@ export default function ProjectsPage() {
     <main className="min-h-screen bg-[var(--bg-primary)] text-[var(--text-primary)] pt-24">
       <Navbar />
       <div className="max-w-6xl mx-auto px-6 py-4">
-        <a href="/" className="btn-secondary px-4 py-2 rounded-full text-xs font-semibold inline-flex items-center gap-1.5 mb-2">
+        <Link href="/" className="btn-secondary px-4 py-2 rounded-full text-xs font-semibold inline-flex items-center gap-1.5 mb-2">
           ← Back to Main Portfolio
-        </a>
+        </Link>
       </div>
       <Projects onOpenCaseStudy={(project) => setModalContent(project)} />
       <Footer />

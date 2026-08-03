@@ -24,19 +24,22 @@ const getTranslationKey = (label) => {
 };
 
 export default function Navbar({ onOpenTerminal = () => {} }) {
-  const [theme, setTheme]           = useState('dark');
+  const [theme, setTheme]           = useState(() => {
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem('ammar_theme') || 'dark';
+    }
+    return 'dark';
+  });
   const { lang, changeLanguage }    = useLanguage();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled]     = useState(false);
 
   const activeId = useScrollSpy(sectionIds);
 
-  /* ── Init from localStorage ── */
+  /* ── Init theme attribute ── */
   useEffect(() => {
-    const t = localStorage.getItem('ammar_theme') || 'dark';
-    setTheme(t);
-    document.documentElement.setAttribute('data-theme', t);
-  }, []);
+    document.documentElement.setAttribute('data-theme', theme);
+  }, [theme]);
 
   /* ── Scroll detection ── */
   useEffect(() => {

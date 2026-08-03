@@ -27,14 +27,18 @@
     "@vitejs/plugin-react": "^6.0.5",
     "axe-core": "^4.12.1",
     "canvas-confetti": "^1.9.4",
+    "feed": "^6.0.0",
     "framer-motion": "^12.43.0",
     "jsdom": "^29.1.1",
     "lucide-react": "^1.28.0",
     "next": "16.2.12",
+    "nodemailer": "^9.0.3",
     "playwright": "^1.62.1",
     "react": "19.2.4",
     "react-dom": "19.2.4",
-    "vitest": "^4.1.10"
+    "resend": "^6.18.1",
+    "vitest": "^4.1.10",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",

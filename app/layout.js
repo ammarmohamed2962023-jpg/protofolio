@@ -57,6 +57,7 @@ export const metadata = {
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { LanguageProvider } from "@/context/LanguageContext";
+import SkipToContent from "@/components/SkipToContent";
 
 export default function RootLayout({ children }) {
   const jsonLd = {
@@ -87,7 +88,7 @@ export default function RootLayout({ children }) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="theme-color" content="#060912" />
         <link rel="manifest" href="/manifest.json" />
-        <link rel="alternate" type="application/rss+xml" title="Ammar Mohamed RSS Feed" href="/rss.xml" />
+        <link rel="alternate" type="application/rss+xml" title="Ammar Mohamed RSS Feed" href="/feed.xml" />
         <script
           dangerouslySetInnerHTML={{
             __html: `
@@ -116,9 +117,12 @@ export default function RootLayout({ children }) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className="min-h-dvh antialiased">
+      <body className="min-h-dvh antialiased" suppressHydrationWarning>
+        <SkipToContent />
         <LanguageProvider>
-          {children}
+          <div id="main-content">
+            {children}
+          </div>
         </LanguageProvider>
         <Analytics />
         <SpeedInsights />

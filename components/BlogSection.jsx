@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 'use client';
 import { useState, useEffect } from 'react';
 import { Clock, Tag, ArrowRight, Search } from 'lucide-react';
@@ -150,16 +151,30 @@ export default function BlogSection({ onOpenArticle }) {
               </button>
             ))}
           </div>
-          <div className="relative w-full sm:w-56">
-            <Search className="absolute left-3 rtl:left-auto rtl:right-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-[var(--text-muted)]" aria-hidden="true" />
-            <input
-              type="search"
-              placeholder={lang === 'ar' ? 'ابحث في المقالات...' : 'Search articles...'}
-              value={search}
-              onChange={e => setSearch(e.target.value)}
-              className="form-input pl-9 rtl:pl-3 rtl:pr-9 text-xs rounded-full w-full"
-              aria-label="Search blog articles"
-            />
+          <div className="flex items-center gap-2 w-full sm:w-auto">
+            <div className="relative w-full sm:w-56">
+              <Search className="absolute left-3 rtl:left-auto rtl:right-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-[var(--text-muted)]" aria-hidden="true" />
+              <input
+                type="search"
+                placeholder={lang === 'ar' ? 'ابحث في المقالات...' : 'Search articles...'}
+                value={search}
+                onChange={e => setSearch(e.target.value)}
+                className="form-input pl-9 rtl:pl-3 rtl:pr-9 text-xs rounded-full w-full"
+                aria-label="Search blog articles"
+              />
+            </div>
+            <a
+              href="/feed.xml"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-2 rounded-full glass-sm text-[var(--accent-orange)] hover:bg-[var(--accent-orange)]/10 transition-colors shrink-0"
+              title="RSS Feed"
+              aria-label="Subscribe to RSS Feed"
+            >
+              <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M6.501 20.001C5.673 20.001 5 19.328 5 18.5C5 17.672 5.673 17 6.501 17C7.328 17 8 17.672 8 18.5C8 19.328 7.328 20.001 6.501 20.001ZM5 11V13.522C8.752 13.522 11.478 16.248 11.478 20H14C14 15.038 9.962 11 5 11ZM5 5V7.632C11.821 7.632 16.368 12.179 16.368 19H19C19 11.268 12.732 5 5 5Z" />
+              </svg>
+            </a>
           </div>
         </motion.div>
 

@@ -14,7 +14,7 @@ const KB = [
   },
   {
     patterns: ['skill', 'language', 'programming', 'tech'],
-    reply: "Ammar's core skills include:\n• **C#** (.NET WinForms, 90%)\n• **Java** (OOP & Swing, 88%)\n• **C++** (Data Structures, 82%)\n• **JavaScript / Next.js** (84%)\n• **Cisco IOS** (Routing, VLAN, ACL, 90%+)\n• **SQL Server & MySQL** (85%)",
+    reply: "Ammar's core skills include:\n• **C#** (.NET WinForms)\n• **Java** (OOP & Swing)\n• **C++** (Data Structures)\n• **JavaScript / Next.js**\n• **Cisco IOS** (Routing, VLAN, ACL)\n• **SQL Server & MySQL**",
   },
   {
     patterns: ['intern', 'job', 'hire', 'recruit', 'available', 'work'],
@@ -135,7 +135,7 @@ export default function AIAssistant() {
       const reply = getReply(msg);
       setTyping(false);
       setMessages(prev => [...prev, { sender: 'bot', text: reply }]);
-    }, 700 + Math.random() * 400);
+    }, 900);
   };
 
   const handleSuggestion = (s) => {
@@ -177,7 +177,7 @@ export default function AIAssistant() {
         >
           <span className="flex items-center gap-2 text-sm font-bold text-[var(--accent-cyan)]">
             <Sparkles className="w-4 h-4" aria-hidden="true" />
-            Ammar's AI Assistant
+            Ammar&apos;s AI Assistant
           </span>
           <div className="flex items-center gap-1.5">
             <button

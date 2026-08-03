@@ -51,31 +51,23 @@ const CAT_COLORS = {
 };
 
 /* ── Animated progress bar ── */
-function SkillBar({ name, level, years, color, lang, t }) {
-  const yearsSuffix = years > 1 ? t.skillsYearsSuffixPlural : t.skillsYearsSuffixSingular;
-
+function SkillBar({ name, level, color }) {
   return (
     <motion.div 
-      className="space-y-1.5"
+      className="space-y-2"
       initial={{ opacity: 0, x: -20 }}
       whileInView={{ opacity: 1, x: 0 }}
       viewport={{ once: true }}
       transition={{ type: "spring", stiffness: 100 }}
     >
-      <div className="flex items-center justify-between text-xs font-semibold">
-        <span className="text-[var(--text-primary)]">{name}</span>
-        <div className="flex items-center gap-2">
-          {years > 0 && (
-            <span className="text-[9px] font-medium text-[var(--text-muted)] font-mono">{years} {yearsSuffix}</span>
-          )}
-          <span className="font-mono" style={{ color }}>{level}%</span>
-        </div>
+      <div className="flex items-center justify-between">
+        <span className="text-xs sm:text-sm font-semibold tracking-wide text-[var(--text-primary)] leading-tight">{name}</span>
       </div>
       <div className="skill-bar-track">
         <motion.div
           className="skill-bar-fill"
           initial={{ width: 0 }}
-          whileInView={{ width: `${level}%` }}
+          whileInView={{ width: '100%' }}
           viewport={{ once: true }}
           transition={{ duration: 1.2, ease: "easeOut" }}
           style={{
@@ -227,7 +219,7 @@ export default function Skills() {
                       </div>
                       <div className="space-y-4">
                         {skills.map((skill) => (
-                          <SkillBar key={skill.name} {...skill} lang={lang} t={t} />
+                          <SkillBar key={skill.name} {...skill} />
                         ))}
                       </div>
                     </motion.div>

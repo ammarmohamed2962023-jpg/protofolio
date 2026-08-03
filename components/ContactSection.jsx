@@ -32,19 +32,37 @@ export default function ContactSection({ onShowToast }) {
     return e;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const errs = validate();
     if (Object.keys(errs).length > 0) { setErrors(errs); return; }
     setErrors({});
     setSending(true);
 
-    /* EmailJS integration placeholder — wire your credentials here */
-    setTimeout(() => {
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form),
+      });
+      const data = await res.json();
+
       setSending(false);
-      onShowToast(t.valSuccessToast.replace('{name}', form.name), 'success');
-      setForm({ name: '', email: '', subject: '', message: '' });
-    }, 1200);
+      if (res.ok && data.success) {
+        if (onShowToast) onShowToast(t.valSuccessToast ? t.valSuccessToast.replace('{name}', form.name) : data.message, 'success');
+        setForm({ name: '', email: '', subject: '', message: '' });
+      } else {
+        if (data.details) {
+          const formatted = {};
+          Object.keys(data.details).forEach(key => { formatted[key] = data.details[key][0]; });
+          setErrors(formatted);
+        }
+        if (onShowToast) onShowToast(data.error || 'Failed to send message', 'error');
+      }
+    } catch (err) {
+      setSending(false);
+      if (onShowToast) onShowToast('Network error. Please try again.', 'error');
+    }
   };
 
   const handleCopyEmail = async () => {

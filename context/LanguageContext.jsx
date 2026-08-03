@@ -4,26 +4,27 @@ import { createContext, useContext, useState, useEffect } from 'react';
 const LanguageContext = createContext(null);
 
 export function LanguageProvider({ children }) {
-  const [lang, setLang] = useState('en');
-  const [mounted, setMounted] = useState(false);
+  const [lang, setLang] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem('ammar_lang') || 'en';
+    }
+    return 'en';
+  });
 
   useEffect(() => {
-    setMounted(true);
-    const storedLang = localStorage.getItem('ammar_lang') || 'en';
-    setLang(storedLang);
-    document.documentElement.setAttribute('lang', storedLang);
-    document.documentElement.setAttribute('dir', storedLang === 'ar' ? 'rtl' : 'ltr');
-  }, []);
+    document.documentElement.setAttribute('lang', lang);
+    document.documentElement.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+  }, [lang]);
 
   const changeLanguage = (newLang) => {
     setLang(newLang);
-    localStorage.setItem('ammar_lang', newLang);
-    document.documentElement.setAttribute('lang', newLang);
-    document.documentElement.setAttribute('dir', newLang === 'ar' ? 'rtl' : 'ltr');
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('ammar_lang', newLang);
+    }
   };
 
   return (
-    <LanguageContext.Provider value={{ lang: mounted ? lang : 'en', changeLanguage }}>
+    <LanguageContext.Provider value={{ lang, changeLanguage }}>
       {children}
     </LanguageContext.Provider>
   );
@@ -36,4 +37,3 @@ export function useLanguage() {
   }
   return context;
 }
-

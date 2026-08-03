@@ -47,14 +47,14 @@ const COMMANDS = {
   skills: () => ({
     output: `Technical Skills
 ──────────────────────────────
-  [████████░░] C# .NET    90%
-  [████████░░] Java OOP   88%
-  [████████░░] TCP/IP     93%
-  [█████████░] Subnetting 95%
-  [████████░░] HTML/CSS   92%
-  [████████░░] JavaScript 84%
-  [████████░░] SQL Server 85%
-  [█████████░] Git/GitHub 88%`,
+  • C# .NET WinForms / OOP
+  • Java OOP & Swing / JavaFX
+  • TCP/IP & OSI Model
+  • IP Subnetting (IPv4/IPv6)
+  • HTML5 & CSS3 / Tailwind
+  • JavaScript & Next.js
+  • SQL Server & MySQL
+  • Git & GitHub / Cisco Packet Tracer`,
     color: 'text-[var(--accent-blue)]',
   }),
 
@@ -255,7 +255,7 @@ export default function TerminalModal({ isOpen, onClose }) {
             </div>
             <span className="flex items-center gap-2 text-xs font-bold text-[var(--accent-cyan)]">
               <TermIcon className="w-3.5 h-3.5" aria-hidden="true" />
-              Ammar's Portfolio CLI
+              Ammar&apos;s Portfolio CLI
             </span>
           </div>
           <button
