@@ -60,20 +60,24 @@ export async function POST(request) {
     const gmailUser = process.env.GMAIL_USER || 'ammar.mohamed.cs@gmail.com';
     const gmailPass = process.env.GMAIL_APP_PASSWORD;
 
-    const emailPromises = [];
+    let sentViaGmail = false;
+    let sentViaResend = false;
+    let gmailErrorMsg = '';
+    let resendErrorMsg = '';
 
-    // Send via Gmail SMTP (Nodemailer) if App Password is configured
+    // 1. Attempt sending via Gmail (Nodemailer service: 'gmail')
     if (gmailUser && gmailPass) {
-      const transporter = nodemailer.createTransport({
-        service: 'gmail',
-        auth: {
-          user: gmailUser,
-          pass: gmailPass,
-        },
-      });
+      try {
+        const cleanPass = gmailPass.replace(/\s+/g, '');
+        const transporter = nodemailer.createTransport({
+          service: 'gmail',
+          auth: {
+            user: gmailUser,
+            pass: cleanPass,
+          },
+        });
 
-      emailPromises.push(
-        transporter.sendMail({
+        await transporter.sendMail({
           from: `"Portfolio Contact" <${gmailUser}>`,
           to: recipientEmail,
           replyTo: email,
@@ -81,7 +85,7 @@ export async function POST(request) {
           html: `
             <div style="font-family: Arial, sans-serif; padding: 20px; color: #333; line-height: 1.6;">
               <h2 style="color: #00e5ff; border-bottom: 2px solid #00e5ff; padding-bottom: 10px;">New Contact Message (Gmail)</h2>
-              <p><strong>Name:</strong> ${name}</p>
+              <p><strong>Sender Name:</strong> ${name}</p>
               <p><strong>Sender Email:</strong> <a href="mailto:${email}">${email}</a></p>
               <p><strong>Subject:</strong> ${subject || 'N/A'}</p>
               <div style="margin-top: 20px; padding: 15px; background: #f4f6f8; border-radius: 8px; border-left: 4px solid #00e5ff;">
@@ -90,17 +94,22 @@ export async function POST(request) {
               </div>
             </div>
           `,
-        })
-      );
+        });
+        sentViaGmail = true;
+        console.log('[Contact API] Sent via Gmail successfully!');
+      } catch (gmailErr) {
+        console.error('[Contact API] Gmail Error:', gmailErr);
+        gmailErrorMsg = gmailErr?.message || String(gmailErr);
+      }
     }
 
-    // Send via Resend API if API Key is configured
+    // 2. Attempt sending via Resend API
     if (resendApiKey) {
-      const resend = new Resend(resendApiKey);
-      const fromEmail = process.env.RESEND_FROM_EMAIL || 'Portfolio Contact <onboarding@resend.dev>';
+      try {
+        const resend = new Resend(resendApiKey);
+        const fromEmail = process.env.RESEND_FROM_EMAIL || 'Portfolio Contact <onboarding@resend.dev>';
 
-      emailPromises.push(
-        resend.emails.send({
+        const { error } = await resend.emails.send({
           from: fromEmail,
           to: recipientEmail,
           replyTo: email,
@@ -108,7 +117,7 @@ export async function POST(request) {
           html: `
             <div style="font-family: Arial, sans-serif; padding: 20px; color: #333; line-height: 1.6;">
               <h2 style="color: #00e5ff; border-bottom: 2px solid #00e5ff; padding-bottom: 10px;">New Contact Message (Resend)</h2>
-              <p><strong>Name:</strong> ${name}</p>
+              <p><strong>Sender Name:</strong> ${name}</p>
               <p><strong>Sender Email:</strong> <a href="mailto:${email}">${email}</a></p>
               <p><strong>Subject:</strong> ${subject || 'N/A'}</p>
               <div style="margin-top: 20px; padding: 15px; background: #f4f6f8; border-radius: 8px; border-left: 4px solid #00e5ff;">
@@ -117,32 +126,42 @@ export async function POST(request) {
               </div>
             </div>
           `,
-        })
-      );
+        });
+
+        if (error) {
+          console.error('[Contact API] Resend Error:', error);
+          resendErrorMsg = error.message || JSON.stringify(error);
+        } else {
+          sentViaResend = true;
+          console.log('[Contact API] Sent via Resend successfully!');
+        }
+      } catch (resendErr) {
+        console.error('[Contact API] Resend Catch Error:', resendErr);
+        resendErrorMsg = resendErr?.message || String(resendErr);
+      }
     }
 
-    if (emailPromises.length > 0) {
-      const results = await Promise.allSettled(emailPromises);
-      results.forEach((res, i) => {
-        if (res.status === 'rejected') {
-          console.error(`Email Service ${i + 1} Error:`, res.reason);
-        }
-      });
-    } else {
-      console.log(`[Contact Submission (Dev Fallback)] From: ${name} (${email}) | Subject: ${subject || 'N/A'}`);
-      console.log(`Message: ${message}`);
+    if (!sentViaGmail && !sentViaResend) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: 'Email delivery failed.',
+          details: { gmailError: gmailErrorMsg, resendError: resendErrorMsg },
+        },
+        { status: 500 }
+      );
     }
 
     return NextResponse.json(
       {
         success: true,
-        message: 'Your message has been received successfully. I will get back to you soon!',
-        data: { name, email },
+        message: 'Your message has been received successfully! I will get back to you soon.',
+        data: { sentViaGmail, sentViaResend },
       },
       { status: 200 }
     );
   } catch (error) {
-    console.error('Contact API Error:', error);
+    console.error('Contact API Internal Error:', error);
     return NextResponse.json(
       { success: false, error: 'Internal server error processing message.' },
       { status: 500 }
