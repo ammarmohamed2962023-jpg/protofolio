@@ -1,4 +1,4 @@
-// Prisma Schema - Portfolio Enterprise CMS (Phase 1.5 Hardened Schema)
+// Prisma Schema - Portfolio Enterprise CMS (Phase 2A Projects Engine)
 
 generator client {
   provider = "prisma-client-js"
@@ -51,6 +51,9 @@ enum SkillCategory {
 
 enum ProjectStatus {
   DRAFT
+  IN_REVIEW
+  APPROVED
+  SCHEDULED
   PUBLISHED
   ARCHIVED
 }
@@ -81,6 +84,7 @@ model User {
   auditLogs       AuditLog[]
   notifications   Notification[]
   blogPosts       BlogPost[]
+  projectVersions ProjectVersion[]
 
   @@index([email])
   @@index([role])
@@ -194,14 +198,12 @@ model Notification {
   @@index([userId, isRead])
 }
 
-// ── SETTINGS MODEL ──
-
 model Setting {
   id          String          @id @default(cuid())
   key         String          @unique
   value       Json
   category    SettingCategory @default(SYSTEM)
-  type        String          @default("string") // string | boolean | number | json
+  type        String          @default("string")
   description String?
   isPublic    Boolean         @default(false)
   validation  Json?
@@ -243,62 +245,148 @@ model ResumeVersion {
   @@index([isActive])
 }
 
-model ProjectCategory {
-  id        String    @id @default(cuid())
-  name      String    @unique
-  slug      String    @unique
-  projects  Project[]
+// ── PROJECTS MANAGEMENT SYSTEM (PHASE 2A) ──
 
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+model ProjectCategory {
+  id          String    @id @default(cuid())
+  name        String    @unique
+  slug        String    @unique
+  icon        String?
+  color       String?   @default("var(--accent-cyan)")
+  order       Int       @default(0)
+  projects    Project[]
+
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([order])
 }
 
 model Technology {
-  id        String    @id @default(cuid())
-  name      String    @unique
-  icon      String?
-  projects  Project[]
+  id          String    @id @default(cuid())
+  name        String    @unique
+  slug        String    @unique
+  icon        String?
+  color       String?   @default("var(--accent-blue)")
+  projects    Project[]
 
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Tag {
+  id          String    @id @default(cuid())
+  name        String    @unique
+  slug        String    @unique
+  projects    Project[]
+
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
 }
 
 model Project {
-  id           String          @id @default(cuid())
-  title        String
-  slug         String          @unique
-  summary      String
-  description  String
-  coverImage   String?
-  demoUrl      String?
-  githubUrl    String?
-  featured     Boolean         @default(false)
-  status       ProjectStatus   @default(PUBLISHED)
-  order        Int             @default(0)
-  deletedAt    DateTime?
+  id             String                @id @default(cuid())
+  title          String
+  slug           String                @unique
+  summary        String
+  description    String
+  coverImage     String?
+  demoUrl        String?
+  githubUrl      String?
+  featured       Boolean               @default(false)
+  featuredOrder  Int                   @default(0)
+  pinned         Boolean               @default(false)
+  status         ProjectStatus         @default(DRAFT)
+  version        Int                   @default(1)
+  order          Int                   @default(0)
+  client         String?
+  projectType    String?               @default("Web Application")
+  completionDate DateTime?
+  linkStatus     String?               @default("valid")
 
-  categoryId   String?
-  category     ProjectCategory? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
-  technologies Technology[]
-  images       ProjectImage[]
+  // SEO Fields & Health Score
+  seoTitle       String?
+  seoDescription String?
+  ogImage        String?
+  seoScore       Int                   @default(0)
 
-  createdAt    DateTime        @default(now())
-  updatedAt    DateTime        @updatedAt
+  deletedAt      DateTime?
+
+  categoryId     String?
+  category       ProjectCategory?      @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  technologies   Technology[]
+  tags           Tag[]
+  images         ProjectImage[]
+  versions       ProjectVersion[]
+  slugRedirects  ProjectSlugRedirect[]
+  analytics      ProjectAnalytics?
+
+  createdAt      DateTime              @default(now())
+  updatedAt      DateTime              @updatedAt
 
   @@index([slug])
-  @@index([featured])
+  @@index([status])
+  @@index([featured, featuredOrder])
   @@index([deletedAt])
 }
 
 model ProjectImage {
+  id             String   @id @default(cuid())
+  url            String
+  altText        String?
+  caption        String?
+  order          Int      @default(0)
+  isCover        Boolean  @default(false)
+  isThumbnail    Boolean  @default(false)
+  width          Int?
+  height         Int?
+  blurPlaceholder String?
+  projectId      String
+  project        Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  createdAt      DateTime @default(now())
+
+  @@index([projectId, order])
+}
+
+model ProjectVersion {
+  id            String   @id @default(cuid())
+  version       Int
+  projectId     String
+  project       Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  changedById   String?
+  changedBy     User?    @relation(fields: [changedById], references: [id], onDelete: SetNull)
+  changeSummary String
+  snapshot      Json
+
+  createdAt     DateTime @default(now())
+
+  @@index([projectId, version])
+}
+
+model ProjectSlugRedirect {
   id        String   @id @default(cuid())
-  url       String
-  alt       String?
-  order     Int      @default(0)
+  oldSlug   String   @unique
+  newSlug   String
   projectId String
   project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
+
+  @@index([oldSlug])
+}
+
+model ProjectAnalytics {
+  id             String   @id @default(cuid())
+  projectId      String   @unique
+  project        Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  views          Int      @default(0)
+  clicks         Int      @default(0)
+  githubClicks   Int      @default(0)
+  liveDemoClicks Int      @default(0)
+
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
 }
 
 model Skill {
@@ -411,7 +499,7 @@ model Media {
   url       String
   mimeType  String
   size      Int
-  provider  String   @default("local") // local | cloudinary | supabase
+  provider  String   @default("local")
   publicId  String?
 
   createdAt DateTime @default(now())

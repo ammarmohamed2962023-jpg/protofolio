@@ -27,3 +27,5 @@ export function TableRowSkeleton() {
     </div>
   );
 }
+
+export default TableRowSkeleton;
