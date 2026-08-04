@@ -54,5 +54,8 @@
   "overrides": {
     "react": "$react",
     "react-dom": "$react-dom"
+  },
+  "prisma": {
+    "seed": "node prisma/seed.js"
   }
 }

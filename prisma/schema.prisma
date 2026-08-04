@@ -1,4 +1,4 @@
-// Prisma Schema - Portfolio Enterprise CMS
+// Prisma Schema - Portfolio Enterprise CMS (Phase 1.5 Hardened Schema)
 
 generator client {
   provider = "prisma-client-js"
@@ -31,7 +31,37 @@ enum NotificationType {
   ERROR
 }
 
-// ── MODELS ──
+enum SettingCategory {
+  SEO
+  CONTACT
+  SOCIAL
+  UI
+  ANALYTICS
+  SYSTEM
+}
+
+enum SkillCategory {
+  PROGRAMMING
+  WEB
+  NETWORKING
+  DATABASE
+  TOOLS
+  SOFT_SKILLS
+}
+
+enum ProjectStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+enum BlogPostStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+// ── AUTH & USER MODELS ──
 
 model User {
   id              String         @id @default(cuid())
@@ -50,6 +80,7 @@ model User {
   activityLogs    ActivityLog[]
   auditLogs       AuditLog[]
   notifications   Notification[]
+  blogPosts       BlogPost[]
 
   @@index([email])
   @@index([role])
@@ -99,6 +130,8 @@ model Session {
   @@index([sessionToken])
 }
 
+// ── ENHANCED AUDIT & ACTIVITY LOGS ──
+
 model ActivityLog {
   id        String   @id @default(cuid())
   action    String
@@ -107,7 +140,14 @@ model ActivityLog {
   metadata  Json?
   userId    String?
   user      User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  
   ipAddress String?
+  userAgent String?
+  browser   String?
+  os        String?
+  device    String?
+  method    String?
+  route     String?
 
   createdAt DateTime @default(now())
 
@@ -117,17 +157,24 @@ model ActivityLog {
 }
 
 model AuditLog {
-  id           String   @id @default(cuid())
-  action       String
-  entity       String
-  entityId     String?
-  previousData Json?
-  newData      Json?
-  userId       String?
-  user         User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
-  ipAddress    String?
+  id             String   @id @default(cuid())
+  action         String
+  entity         String
+  entityId       String?
+  previousValues Json?
+  newValues      Json?
+  userId         String?
+  user           User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  
+  ipAddress      String?
+  userAgent      String?
+  browser        String?
+  os             String?
+  device         String?
+  method         String?
+  route          String?
 
-  createdAt    DateTime @default(now())
+  createdAt      DateTime @default(now())
 
   @@index([userId])
   @@index([entity, entityId])
@@ -147,20 +194,26 @@ model Notification {
   @@index([userId, isRead])
 }
 
-model Setting {
-  id          String   @id @default(cuid())
-  key         String   @unique
-  value       Json
-  group       String   @default("general")
-  isPublic    Boolean  @default(false)
-  description String?
+// ── SETTINGS MODEL ──
 
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+model Setting {
+  id          String          @id @default(cuid())
+  key         String          @unique
+  value       Json
+  category    SettingCategory @default(SYSTEM)
+  type        String          @default("string") // string | boolean | number | json
+  description String?
+  isPublic    Boolean         @default(false)
+  validation  Json?
+
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
 
   @@index([key])
-  @@index([group])
+  @@index([category])
 }
+
+// ── DOMAIN PREPARATION MODELS ──
 
 model SocialLink {
   id        String   @id @default(cuid())
@@ -188,4 +241,180 @@ model ResumeVersion {
   updatedAt      DateTime @updatedAt
 
   @@index([isActive])
+}
+
+model ProjectCategory {
+  id        String    @id @default(cuid())
+  name      String    @unique
+  slug      String    @unique
+  projects  Project[]
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Technology {
+  id        String    @id @default(cuid())
+  name      String    @unique
+  icon      String?
+  projects  Project[]
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Project {
+  id           String          @id @default(cuid())
+  title        String
+  slug         String          @unique
+  summary      String
+  description  String
+  coverImage   String?
+  demoUrl      String?
+  githubUrl    String?
+  featured     Boolean         @default(false)
+  status       ProjectStatus   @default(PUBLISHED)
+  order        Int             @default(0)
+  deletedAt    DateTime?
+
+  categoryId   String?
+  category     ProjectCategory? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  technologies Technology[]
+  images       ProjectImage[]
+
+  createdAt    DateTime        @default(now())
+  updatedAt    DateTime        @updatedAt
+
+  @@index([slug])
+  @@index([featured])
+  @@index([deletedAt])
+}
+
+model ProjectImage {
+  id        String   @id @default(cuid())
+  url       String
+  alt       String?
+  order     Int      @default(0)
+  projectId String
+  project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+}
+
+model Skill {
+  id        String        @id @default(cuid())
+  name      String        @unique
+  category  SkillCategory @default(PROGRAMMING)
+  level     Int           @default(100)
+  years     Int           @default(1)
+  color     String?
+  icon      String?
+  order     Int           @default(0)
+  isVisible Boolean       @default(true)
+
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+
+  @@index([category])
+}
+
+model Experience {
+  id           String    @id @default(cuid())
+  company      String
+  position     String
+  location     String?
+  startDate    DateTime
+  endDate      DateTime?
+  isCurrent    Boolean   @default(false)
+  description  String
+  technologies String[]
+  order        Int       @default(0)
+  deletedAt    DateTime?
+
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  @@index([order])
+}
+
+model Education {
+  id           String   @id @default(cuid())
+  institution  String
+  degree       String
+  fieldOfStudy String
+  startDate    DateTime
+  endDate      DateTime?
+  description  String?
+  order        Int      @default(0)
+
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Certificate {
+  id           String    @id @default(cuid())
+  title        String
+  issuer       String
+  issueDate    DateTime
+  credentialId String?
+  verifyUrl    String?
+  imageUrl     String?
+  order        Int       @default(0)
+  deletedAt    DateTime?
+
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  @@index([issuer])
+}
+
+model BlogPost {
+  id          String         @id @default(cuid())
+  title       String
+  slug        String         @unique
+  summary     String
+  content     String
+  coverImage  String?
+  tags        String[]
+  status      BlogPostStatus @default(PUBLISHED)
+  viewsCount  Int            @default(0)
+  authorId    String?
+  author      User?          @relation(fields: [authorId], references: [id], onDelete: SetNull)
+  deletedAt   DateTime?
+
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+
+  @@index([slug])
+  @@index([status])
+}
+
+model Message {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  subject   String?
+  message   String
+  isRead    Boolean  @default(false)
+  ipAddress String?
+  userAgent String?
+
+  createdAt DateTime @default(now())
+
+  @@index([email])
+  @@index([isRead])
+}
+
+model Media {
+  id        String   @id @default(cuid())
+  filename  String
+  url       String
+  mimeType  String
+  size      Int
+  provider  String   @default("local") // local | cloudinary | supabase
+  publicId  String?
+
+  createdAt DateTime @default(now())
+
+  @@index([provider])
 }

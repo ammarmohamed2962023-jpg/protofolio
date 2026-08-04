@@ -1,15 +1,10 @@
-import { NextResponse } from 'next/server';
+import { apiSuccess, apiError } from '@/lib/api/response';
 
 export async function POST(request) {
   try {
-    const event = await request.json();
-    console.log('[Analytics Event]', event);
-
-    return NextResponse.json({ success: true }, { status: 200 });
-  } catch (error) {
-    return NextResponse.json(
-      { success: false, error: 'Invalid analytics payload' },
-      { status: 400 }
-    );
+    const body = await request.json();
+    return apiSuccess({ received: true, event: body?.event || 'pageview' }, 'Analytics event logged', {}, 200);
+  } catch (err) {
+    return apiError('INVALID_PAYLOAD', 'Failed to process analytics payload', 400);
   }
 }

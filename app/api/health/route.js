@@ -1,14 +1,15 @@
-import { NextResponse } from 'next/server';
+import { apiSuccess } from '@/lib/api/response';
 
 export async function GET() {
-  return NextResponse.json(
+  return apiSuccess(
     {
       status: 'healthy',
-      timestamp: new Date().toISOString(),
-      environment: process.env.NODE_ENV || 'development',
       uptime: process.uptime(),
-      version: '2.0.0',
+      timestamp: new Date().toISOString(),
+      env: process.env.NODE_ENV,
     },
-    { status: 200 }
+    'Health check operational',
+    {},
+    200
   );
 }
