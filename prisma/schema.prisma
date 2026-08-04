@@ -1,4 +1,4 @@
-// Prisma Schema - Portfolio Enterprise CMS (Phase 2A Projects Engine)
+// Prisma Schema - Portfolio Enterprise CMS (Phase 2B Career & Skills Engine)
 
 generator client {
   provider = "prisma-client-js"
@@ -40,7 +40,7 @@ enum SettingCategory {
   SYSTEM
 }
 
-enum SkillCategory {
+enum SkillCategoryType {
   PROGRAMMING
   WEB
   NETWORKING
@@ -134,7 +134,7 @@ model Session {
   @@index([sessionToken])
 }
 
-// ── ENHANCED AUDIT & ACTIVITY LOGS ──
+// ── AUDIT & ACTIVITY LOGS ──
 
 model ActivityLog {
   id        String   @id @default(cuid())
@@ -215,7 +215,7 @@ model Setting {
   @@index([category])
 }
 
-// ── DOMAIN PREPARATION MODELS ──
+// ── DOMAIN & CAREER MODELS (PHASE 2B) ──
 
 model SocialLink {
   id        String   @id @default(cuid())
@@ -238,11 +238,91 @@ model ResumeVersion {
   fileUrl        String
   isActive       Boolean  @default(false)
   downloadsCount Int      @default(0)
+  seoTitle       String?
+  seoDescription String?
+  ogImage        String?
+  deletedAt      DateTime?
 
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
 
   @@index([isActive])
+  @@index([deletedAt])
+}
+
+model SkillCategory {
+  id          String    @id @default(cuid())
+  name        String    @unique
+  slug        String    @unique
+  icon        String?
+  color       String?   @default("var(--accent-cyan)")
+  order       Int       @default(0)
+  skills      Skill[]
+
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([order])
+}
+
+model Skill {
+  id          String         @id @default(cuid())
+  name        String         @unique
+  level       Int            @default(100)
+  years       Int            @default(1)
+  color       String?
+  icon        String?
+  order       Int            @default(0)
+  isVisible   Boolean        @default(true)
+  deletedAt   DateTime?
+
+  categoryId  String?
+  category    SkillCategory? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+
+  @@index([order])
+  @@index([isVisible])
+  @@index([deletedAt])
+}
+
+model Experience {
+  id           String    @id @default(cuid())
+  company      String
+  position     String
+  location     String?
+  startDate    DateTime
+  endDate      DateTime?
+  isCurrent    Boolean   @default(false)
+  description  String
+  technologies String[]
+  order        Int       @default(0)
+  deletedAt    DateTime?
+
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  @@index([order])
+  @@index([deletedAt])
+}
+
+model Education {
+  id           String    @id @default(cuid())
+  institution  String
+  degree       String
+  fieldOfStudy String
+  startDate    DateTime
+  endDate      DateTime?
+  description  String?
+  order        Int       @default(0)
+  deletedAt    DateTime?
+
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  @@index([order])
+  @@index([deletedAt])
 }
 
 // ── PROJECTS MANAGEMENT SYSTEM (PHASE 2A) ──
@@ -304,7 +384,6 @@ model Project {
   completionDate DateTime?
   linkStatus     String?               @default("valid")
 
-  // SEO Fields & Health Score
   seoTitle       String?
   seoDescription String?
   ogImage        String?
@@ -331,20 +410,20 @@ model Project {
 }
 
 model ProjectImage {
-  id             String   @id @default(cuid())
-  url            String
-  altText        String?
-  caption        String?
-  order          Int      @default(0)
-  isCover        Boolean  @default(false)
-  isThumbnail    Boolean  @default(false)
-  width          Int?
-  height         Int?
-  blurPlaceholder String?
-  projectId      String
-  project        Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  id              String   @id @default(cuid())
+  url             String
+  altText         String?
+  caption         String?
+  order           Int      @default(0)
+  isCover         Boolean  @default(false)
+  isThumbnail     Boolean  @default(false)
+  width           Int?
+  height          Int?
+  blurPlaceholder  String?
+  projectId       String
+  project         Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
 
-  createdAt      DateTime @default(now())
+  createdAt       DateTime @default(now())
 
   @@index([projectId, order])
 }
@@ -387,56 +466,6 @@ model ProjectAnalytics {
 
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
-}
-
-model Skill {
-  id        String        @id @default(cuid())
-  name      String        @unique
-  category  SkillCategory @default(PROGRAMMING)
-  level     Int           @default(100)
-  years     Int           @default(1)
-  color     String?
-  icon      String?
-  order     Int           @default(0)
-  isVisible Boolean       @default(true)
-
-  createdAt DateTime      @default(now())
-  updatedAt DateTime      @updatedAt
-
-  @@index([category])
-}
-
-model Experience {
-  id           String    @id @default(cuid())
-  company      String
-  position     String
-  location     String?
-  startDate    DateTime
-  endDate      DateTime?
-  isCurrent    Boolean   @default(false)
-  description  String
-  technologies String[]
-  order        Int       @default(0)
-  deletedAt    DateTime?
-
-  createdAt    DateTime  @default(now())
-  updatedAt    DateTime  @updatedAt
-
-  @@index([order])
-}
-
-model Education {
-  id           String   @id @default(cuid())
-  institution  String
-  degree       String
-  fieldOfStudy String
-  startDate    DateTime
-  endDate      DateTime?
-  description  String?
-  order        Int      @default(0)
-
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
 }
 
 model Certificate {
